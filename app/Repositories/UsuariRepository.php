@@ -4,36 +4,61 @@ namespace App\Repositories;
 
 use App\Models\Usuari;
 use Illuminate\Support\Facades\Hash;
+use Exception;
 
 class UsuariRepository {
 
     //Comprovar Usuari I Contrasenya exsistent.
     public function comprovarUsuariIContrasenya($usuari, $contrasenya) {
-        $usuari = Usuari::where('usuari', $usuari)->first();
-        return $usuari && Hash::check($contrasenya, $usuari->contrasenya) ? $usuari : null;
+        try {
+            $usuari = Usuari::where('usuari', $usuari)->first();
+            if ($usuari && Hash::check($contrasenya, $usuari->contrasenya)) {
+                return $usuari;
+            }
+            return null;
+        } catch (Exception $e) {
+            throw new Exception("Error en comprovar usuari i contrasenya: " . $e->getMessage());
+        }
     }
 
-    //Comprovar Usuari I Email.
-    function comprovarUsuariIEmail($usuari, $email){
-        return Usuari::where('usuari', $usuari)
-        ->orWhere('correu', $email)
-        ->first();
+    // Comprovar Usuari i Email
+    public function comprovarUsuariIEmail($usuari, $email) {
+        try {
+            return Usuari::where('usuari', $usuari)
+                ->orWhere('correu', $email) // Usamos 'correu' para que coincida con la columna de la base de datos
+                ->first();
+        } catch (Exception $e) {
+            throw new Exception("Error en comprovar usuari i correu: " . $e->getMessage());
+        }
     }
 
-    //comprovem l'usuari i agafem la contrasenya.
-    function comprovarExistensiaDUsuari($usuari){
-        return Usuari::where('usuari', $usuari)->first();
+    // Comprovem l'existència de l'usuari
+    public function comprovarExistensiaDUsuari($usuari) {
+        try {
+            return Usuari::where('usuari', $usuari)->first();
+        } catch (Exception $e) {
+            throw new Exception("Error en comprovar l'existència de l'usuari: " . $e->getMessage());
+        }
     }
 
-    //Comprovar la contrasenya per id.
-    function comprovarContrasenyaId($usuariId){
-        return Usuari::find($usuariId);   
+    // Comprovar la contrasenya per ID
+    public function comprovarContrasenyaId($usuariId) {
+        try {
+            return Usuari::find($usuariId);
+        } catch (Exception $e) {
+            throw new Exception("Error en comprovar la contrasenya per ID: " . $e->getMessage());
+        }
     }
 
-    function comprovarNomUsuariExistent($nomUsuari, $usuariId){
-          return Usuari::where('usuari', $nomUsuari)
-            ->where('id_usuari', '!=', $usuariId)
-            ->first();
+    // Comprovar si el nom d'usuari ja existeix (excepte per l'usuari actual)
+    public function comprovarNomUsuariExistent($nomUsuari, $usuariId) {
+        try {
+            return Usuari::where('usuari', $nomUsuari)
+                ->where('id_usuari', '!=', $usuariId)
+                ->first();
+        } catch (Exception $e) {
+            throw new Exception("Error en comprovar si el nom d'usuari existeix: " . $e->getMessage());
+        }
     }
 
     function comprovarEmail($email){   
@@ -47,7 +72,23 @@ class UsuariRepository {
     //INSERT
 
     //Insertar nou Usuari.
-    function insertarNouUsuari($nom, $cognoms, $usuari, $email, $contrasenya){   
+    public function insertarNouUsuari($nom, $cognoms, $usuari, $email, $contrasenya){
+        try {
+            Usuari::create([
+                'nom' => $nom,
+                'cognoms' => $cognoms,
+                'correu' => $email,
+                'usuari' => $usuari,
+                'contrasenya' => $contrasenya,
+                'administrador' => 0,
+                'token' => "",
+                'token_time' => 0,
+                'autentificacio' => ""
+            ]);
+
+        } catch (Exception $exception) {
+            throw new Exception("Error en inserir l'usuari: " . $exception->getMessage());
+        }
     }
 
     //Insertar Usuari per HybridAuth.

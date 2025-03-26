@@ -2,9 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Usuari extends Model {
+class Usuari extends Authenticatable {
+
+    use Notifiable;
+
+    // Desactiva els camps automàtics created_at i updated_at.
+    public $timestamps = false;
     protected $table = 'usuaris';
     protected $primaryKey = 'id_usuari';
 

@@ -12,6 +12,7 @@
     <title>Inici</title>
 </head>
 <body>
+    <!-- Afegim el navbar -->
     <x-navbar />
 
 </body>
