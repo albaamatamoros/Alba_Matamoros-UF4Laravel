@@ -21,8 +21,11 @@ class LoginController extends Controller {
         return view('auth.login');
     }
 
+    public function showPersonatge($id) {
+        return view('auth.login');
+    }
+
     public function loginUsuari(Request $request) {
-        
         // Validació de camps.
         $request->validate([
             'usuari' => 'required',
@@ -44,6 +47,7 @@ class LoginController extends Controller {
         if (!Hash::check($request->contrasenya, $usuari->contrasenya)) {
             return back()->withErrors(['contrasenya' => '➤ La contrasenya no és correcta']);
         }
+
 
         Auth::login($usuari);
 

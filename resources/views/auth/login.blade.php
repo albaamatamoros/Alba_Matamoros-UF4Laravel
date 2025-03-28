@@ -18,7 +18,7 @@
         <div class="container-general-perfil">
             <h2>Iniciar sessió</h2>
 
-            <form action="{{ route('login-usuari') }}" method="POST">
+            <form action="{{ route('loginUsuari') }}" method="POST">
                 @csrf
                 
                 <label for="usuari">Nom d'Usuari:</label>

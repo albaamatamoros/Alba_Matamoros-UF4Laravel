@@ -1,13 +1,22 @@
 <?php
 
+use App\Http\Controllers\AdministrarUsuarisController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RegistrarController;
 use App\Http\Controllers\ArxiuPirataController;
+use App\Http\Controllers\CanviarContrasenyaController;
+use App\Http\Controllers\InsertarController;
+use App\Http\Controllers\ModificarController;
+use App\Http\Controllers\CercaController;
+use App\Http\Controllers\ConsultarController;
+use App\Http\Controllers\EsborrarController;
+use App\Http\Controllers\LectorQRController;
+use App\Http\Controllers\PerfilController;
 
+// --------------------------------------------
 // INDEX
-
 Route::get('/', function () {
     return view('index');
 })->name('index');
@@ -15,12 +24,12 @@ Route::get('/', function () {
 // LOGIN
 
 Route::get('/login', [LoginController::class, 'show'])->name('login');
-Route::post('/login-usuari', [LoginController::class, 'loginUsuari'])->name('login-usuari');
+Route::post('/loginUsuari', [LoginController::class, 'loginUsuari'])->name('loginUsuari');
 
 // REGISTRE
 
 Route::get('/registre', [RegistrarController::class, 'show'])->name('registre');
-Route::post('/registre', [RegistrarController::class, 'registreUsuari'])->name('registre');
+Route::post('/registreUsuari', [RegistrarController::class, 'registreUsuari'])->name('registreUsuari');
 
 //----------------- temporales pa que no pete
 Route::get('/social.callback', function () {
@@ -37,65 +46,52 @@ Route::get('/password', function () {
 // Quan l'usuari està autenticat, pot accedir a les següents rutes.
 Route::middleware(['auth'])->group(function () {
     // GESTIO DE PERSONATGES ------
-    Route::get('/gestio-personatges', function () {
+    Route::get('/gestioPersonatges', function () {
         return view('gestioPersonatges');
-    })->name('gestio-personatges');
+    })->name('gestioPersonatges');
 
     // INSERTAR
-    Route::get('/insertar', function () {
-        return view('insertar');
-    })->name('insertar');
+    Route::get('/insertar', [InsertarController::class, 'show'])->name('insertar');
+    Route::post('/insertarPersonatge', [LoginController::class, 'insertarPersonatge'])->name('insertarPersonatge');
 
-    // MODIFICAR
-    Route::get('/modificar', function () {
-        return view('modificar');
-    })->name('modificar');
+    // MODIFICAR PERSONATGE:
+    // CERCA
+    Route::get('/cercar', [CercaController::class, 'show'])->name('cercar');
+    Route::post('/cercarPersonatge', [CercaController::class, 'cercarPersonatge'])->name('cercarPersonatge');
 
+    // MODIFICAR 
+    Route::get('/modificar', [ModificarController::class, 'show'])->name('modificar');
+    Route::get('/modificarPersonatge/{id}', [ModificarController::class, 'modificarPersonatge'])->name('modificarPersonatge');
+    
     // ESBORRAR
-    Route::get('/esborrar', function () {
-        return view('esborrar');
-    })->name('esborrar');
+    Route::get('/esborrar', [EsborrarController::class, 'show'])->name('esborrar');
+    Route::post('/esborrarPersonatge', [EsborrarController::class, 'esborrarPersonatge'])->name('esborrarPersonatge');
 
     //CCONSULTAR
-    Route::get('/consultar', function () {
-        return view('consultar');
-    })->name('consultar');
+    Route::get('/consultar', [ConsultarController::class, 'show'])->name('consultar');
 
     //-----------------------------
 
     //ARXIU PIRATA
-    Route::get('/arxiu-pirata', [ArxiuPirataController::class, 'show'])->name('arxiu-pirata');
-    Route::get('/arxiu-pirata/api-pirates', [ArxiuPirataController::class, 'obtenirPirates'])->name('obtenirPirates');
-    Route::get('/arxiu-pirata/api-personatges', [ArxiuPirataController::class, 'obtenirPersonatges'])->name('obtenirPersonatges');
-    Route::get('/arxiu-pirata/marines', [ArxiuPirataController::class, 'obtenirMarines'])->name('obtenirMarines');
+    Route::get('/arxiuPirata', [ArxiuPirataController::class, 'show'])->name('arxiuPirata');
+    Route::get('/arxiuPirata/apiPirates', [ArxiuPirataController::class, 'obtenirPirates'])->name('obtenirPirates');
+    Route::get('/arxiuPirata/apiPersonatges', [ArxiuPirataController::class, 'obtenirPersonatges'])->name('obtenirPersonatges');
+    Route::get('/arxiuPirata/marines', [ArxiuPirataController::class, 'obtenirMarines'])->name('obtenirMarines');
 
-
-    //PERFIL
-    Route::get('/perfil', function () {
-        return view('perfil');
-    })->name('perfil');
+    // PERFIL
+    Route::get('/perfil', [PerfilController::class, 'show'])->name('perfil');
+    Route::post('/actualitzarPerfil', [PerfilController::class, 'actualitzarPerfil'])->name('actualitzarPerfil');
 
     //LECTOR QR
-    Route::get('/lector-qr', function () {
-        return view('lector-qr');
-    })->name('lector-qr');
+    Route::get('/lectorQr', [LectorQRController::class, 'show'])->name('lectorQr');
 
     //CANVIAR CONTRASENYA
-    Route::get('/canviar-contrasenya', function () {
-        return view('canviar-contrasenya');
-    })->name('canviar-contrasenya');
+    Route::get('/canviarContrasenya', [CanviarContrasenyaController::class, 'show'])->name('canviarContrasenya');
 
     // LOGOUT
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
-    //modificar nombres porfavor
-    Route::get('/register', function () {
-        return view('register');
-    })->name('register');
-
     Route::middleware(['admin'])->group(function () {
-        Route::get('/administrar-usuaris', function () {
-            return view('administrar-usuaris');
-        })->name('administrar-usuaris');
+        Route::get('/administrarUsuaris', [AdministrarUsuarisController::class, 'show'])->name('administrarUsuaris');
     });
 });

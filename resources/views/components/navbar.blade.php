@@ -4,8 +4,8 @@
         <a href="{{ route('index') }}">INICI</a>
 
         @auth
-            <a href="{{ route('gestio-personatges') }}">GESTIÓ DE PERSONATGES</a>
-            <a href="{{ route('arxiu-pirata') }}">ARXIU PIRATA</a>
+            <a href="{{ route('gestioPersonatges') }}">GESTIÓ DE PERSONATGES</a>
+            <a href="{{ route('arxiuPirata') }}">ARXIU PIRATA</a>
         @endauth
     </div>
 
@@ -28,14 +28,14 @@
             </a>
             <div class="dropdown-content">
                 <a href="{{ route('perfil') }}">Administrar perfil</a>
-                <a href="{{ route('lector-qr') }}">Lector QR</a>
+                <a href="{{ route('lectorQr') }}">Lector QR</a>
                 
                 @if(Auth::user()->autenticacio == "")
-                    <a href="{{ route('canviar-contrasenya') }}">Canviar contrasenya</a>
+                    <a href="{{ route('canviarContrasenya') }}">Canviar contrasenya</a>
                 @endif
                 
                 @if(Auth::user()->es_admin)
-                    <a href="{{ route('admin.usuaris') }}">Administrar usuaris</a>
+                    <a href="{{ route('administrarUsuaris') }}">Administrar usuaris</a>
                 @endif
 
                 <form action="{{ route('logout') }}" method="POST">

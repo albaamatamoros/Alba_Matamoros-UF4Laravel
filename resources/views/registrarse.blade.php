@@ -19,7 +19,7 @@
         <!-- BODY -->
         <div class="container-general-perfil">
             <h2>Registrar-se</h2>
-            <form action="{{ route('registre') }}" method="POST">
+            <form action="{{ route('registreUsuari') }}" method="POST">
                 @csrf
 
                 <label for="nom">Nom:</label>

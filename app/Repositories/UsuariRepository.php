@@ -25,7 +25,7 @@ class UsuariRepository {
     public function comprovarUsuariIEmail($usuari, $email) {
         try {
             return Usuari::where('usuari', $usuari)
-                ->orWhere('correu', $email) // Usamos 'correu' para que coincida con la columna de la base de datos
+                ->orWhere('correu', $email)
                 ->first();
         } catch (Exception $e) {
             throw new Exception("Error en comprovar usuari i correu: " . $e->getMessage());
