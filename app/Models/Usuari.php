@@ -11,6 +11,7 @@ class Usuari extends Authenticatable {
 
     // Desactiva els camps automàtics created_at i updated_at.
     public $timestamps = false;
+    
     protected $table = 'usuaris';
     protected $primaryKey = 'id_usuari';
 

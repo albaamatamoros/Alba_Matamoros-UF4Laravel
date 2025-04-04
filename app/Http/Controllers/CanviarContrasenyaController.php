@@ -9,4 +9,8 @@ class CanviarContrasenyaController extends Controller {
         return view('canviarContrasenya');
     }
 
+    public function show2() {
+        return view('contrasenyaOblidada');
+    }
+
 }

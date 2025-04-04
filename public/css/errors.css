@@ -20,6 +20,7 @@
     padding: 15px;
     margin: 10px 0;
     border-radius: 5px;
+    justify-content: center;
     font-family: Arial, sans-serif;
     display: flex;
     align-items: center;
@@ -32,6 +33,7 @@
     color: var(--colorGrisOscuro);
     border: 1px solid var(--correcteBorder);
     padding: 15px;
+    justify-content: center;
     margin: 10px 0;
     border-radius: 5px;
     font-family: Arial, sans-serif;

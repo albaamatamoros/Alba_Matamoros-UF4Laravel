@@ -10,6 +10,15 @@ class PersonatgeRepository {
     //INSERT
     //Inserir nou personatge.
     function inserir($nom, $text, $usuariId) {
+        try {
+            Personatge::create([
+                'nom' => $nom,
+                'cos' => $text,
+                'usuari_id' => $usuariId,
+            ]);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
     //********************************************************
@@ -23,7 +32,12 @@ class PersonatgeRepository {
     //DELETE
 
     //Esborrem personatge.
-    function esborrar($nom) {
+    public function esborrar($nom) {
+        try {
+            return Personatge::where('nom', $nom)->delete();
+        } catch (\Exception $e) {
+            throw new \Exception("Error al eliminar el personatge: " . $e->getMessage());
+        }
     }
 
     //esborrar personatge per id.
@@ -44,6 +58,11 @@ class PersonatgeRepository {
 
     //Obtenir id_personatge per el nom.
     function obtenerIdDelPersonatgePerNom($nom) {
+        try {
+            return Personatge::where('nom', $nom)->first();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        } 
     }
 
     //Comprovacio per id.

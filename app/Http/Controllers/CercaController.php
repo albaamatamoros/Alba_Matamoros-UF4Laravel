@@ -36,10 +36,13 @@ class CercaController extends Controller {
             return back()->withErrors(["➤ No existeix cap personatge amb aquest Nom."])->withInput();
         }
 
-        $personatgeUsuari = $this->personatgeRepository->selectComprovarUsuariId($request->nom, $usuari->id);
+        $personatgeUsuari = $this->personatgeRepository->selectComprovarUsuariId($request->nom, $usuari->id_usuari);
 
         if (!$personatgeUsuari) {
             return back()->withErrors(["➤ No pots modificar un personatge que no es teu."])->withInput();
         }
+
+        //Enviar id del personage al controlador que muestra la vista para mostrar los datos del personatge.
+        return redirect()->route('modificar', ['nom' => $personatge->nom]);
     }
 }

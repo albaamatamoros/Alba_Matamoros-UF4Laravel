@@ -23,10 +23,19 @@ class InsertarController extends Controller {
 
         $request->validate([
             'nom' => 'required|string|max:255',
-            'cos' => 'required|string|max:1000',
+            'text' => 'required|string|max:1000',
         ], [
             'nom.required' => '➤ El camp Nom està buit.',
-            'cos.required' => '➤ El camp Text està buit.',
+            'text.required' => '➤ El camp Descripció està buit.',
         ]);
+
+        $personatge = $this->personatgeRepository->selectComprovarNom($request->nom);
+
+        if ($personatge) {
+            return back()->withErrors(["➤ Ja exsisteix un personatge amb aquest Nom."])->withInput();
+        }
+
+        $this->personatgeRepository->inserir($request->nom, $request->text, $usuari->id_usuari);
+        return redirect()->route('insertar')->with('correcte', 'Personatge inserit correctament!');
     }
 }

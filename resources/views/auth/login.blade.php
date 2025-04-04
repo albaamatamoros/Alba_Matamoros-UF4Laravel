@@ -47,7 +47,7 @@
                 <!-- ----------------------------------------------- -->
 
                 <div class="info-container">
-                    <a href="{{ route('password') }}">Heu oblidat la contrasenya?</a>
+                    <a href="{{ route('contrasenya/oblidada') }}">Heu oblidat la contrasenya?</a>
                 </div>
             </form>
 

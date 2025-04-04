@@ -31,16 +31,11 @@ Route::post('/loginUsuari', [LoginController::class, 'loginUsuari'])->name('logi
 Route::get('/registre', [RegistrarController::class, 'show'])->name('registre');
 Route::post('/registreUsuari', [RegistrarController::class, 'registreUsuari'])->name('registreUsuari');
 
-//----------------- temporales pa que no pete
-Route::get('/social.callback', function () {
-    return view('social.callback'); 
-})->name('social.callback');
+// CONTRASENYA OBLIDADA
 
-Route::get('/password', function () {
-    return view('password'); 
-})->name('password');
+Route::get('/contrasenyaOblidada', [CanviarContrasenyaController::class, 'show2'])->name('contrasenyaOblidada');
+
 // ------------------------------------------
-
 
 // USUARI
 // Quan l'usuari està autenticat, pot accedir a les següents rutes.
@@ -52,7 +47,7 @@ Route::middleware(['auth'])->group(function () {
 
     // INSERTAR
     Route::get('/insertar', [InsertarController::class, 'show'])->name('insertar');
-    Route::post('/insertarPersonatge', [LoginController::class, 'insertarPersonatge'])->name('insertarPersonatge');
+    Route::post('/insertarPersonatge', [InsertarController::class, 'insertarPersonatge'])->name('insertarPersonatge');
 
     // MODIFICAR PERSONATGE:
     // CERCA
@@ -60,8 +55,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/cercarPersonatge', [CercaController::class, 'cercarPersonatge'])->name('cercarPersonatge');
 
     // MODIFICAR 
-    Route::get('/modificar', [ModificarController::class, 'show'])->name('modificar');
-    Route::get('/modificarPersonatge/{id}', [ModificarController::class, 'modificarPersonatge'])->name('modificarPersonatge');
+    Route::get('/modificar/{nom}', [ModificarController::class, 'show'])->name('modificar');
+    Route::get('/modificarPersonatge', [ModificarController::class, 'modificarPersonatge'])->name('modificarPersonatge');
     
     // ESBORRAR
     Route::get('/esborrar', [EsborrarController::class, 'show'])->name('esborrar');
@@ -95,3 +90,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/administrarUsuaris', [AdministrarUsuarisController::class, 'show'])->name('administrarUsuaris');
     });
 });
+
+//----------------- temporales pa que no pete
+Route::get('/social.callback', function () {
+    return view('social.callback'); 
+})->name('social.callback');
