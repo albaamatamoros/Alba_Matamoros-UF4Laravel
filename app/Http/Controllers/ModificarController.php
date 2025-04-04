@@ -24,7 +24,29 @@ class ModificarController extends Controller {
         return view('modificar', [ 'personatge' => $personatge ]);
     }
 
-    public function modificarPersonatge() {
-        
+    public function modificarPersonatge(Request $request, $personatgeId) {
+        //Obtenim l'usuari autenticat.
+        $usuari = Auth::user();
+
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'text' => 'required|string|max:255',
+        ], [
+            'nom.required' => '➤ El camp nom no pot ser buit',
+            'text.required' => '➤ El camp descripcio no pot ser buit',
+        ]);
+
+        $personatge = $this->personatgeRepository->selectComprovarId($personatgeId);
+        if (!$personatge) {
+            return back()->withErrors(["➤ No existeix cap personatge amb aquest Id."])->withInput();
+        }
+
+        $personatgeUsuari = $this->personatgeRepository->selectComprovarUsuariPerId($personatgeId, $usuari->id_usuari);
+        if (!$personatgeUsuari) {
+            return back()->withErrors(["➤ No pots modificar un personatge que no es teu."])->withInput();
+        }
+
+        $this->personatgeRepository->modificar($request->nom, $request->text, $personatgeId);
+        return redirect()->route('cercar')->with('correcte', 'Personatge modificat correctament!');
     }
 }

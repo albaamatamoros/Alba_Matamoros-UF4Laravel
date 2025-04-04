@@ -56,7 +56,7 @@ Route::middleware(['auth'])->group(function () {
 
     // MODIFICAR 
     Route::get('/modificar/{nom}', [ModificarController::class, 'show'])->name('modificar');
-    Route::get('/modificarPersonatge', [ModificarController::class, 'modificarPersonatge'])->name('modificarPersonatge');
+    Route::post('/modificarPersonatge/{id}', [ModificarController::class, 'modificarPersonatge'])->name('modificarPersonatge');
     
     // ESBORRAR
     Route::get('/esborrar', [EsborrarController::class, 'show'])->name('esborrar');

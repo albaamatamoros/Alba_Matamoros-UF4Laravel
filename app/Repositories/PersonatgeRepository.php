@@ -25,7 +25,16 @@ class PersonatgeRepository {
     //UPDATE
 
     //Modificar personatge.
-    function modificar($nom, $text, $id) {
+    function modificar($nom, $text, $idPersonatge) {
+        try {
+            $personatge = Personatge::findOrFail($idPersonatge);
+            $personatge->update([
+                'nom' => $nom,
+                'cos' => $text,
+            ]);
+        } catch (\Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
     //********************************************************
@@ -66,7 +75,12 @@ class PersonatgeRepository {
     }
 
     //Comprovacio per id.
-    function selectComprovarId($id) {
+    function selectComprovarId($idPersonatge) {
+        try {
+            return Personatge::where('id_personatge', $idPersonatge)->first();
+        } catch (\Exception $e) {
+            throw new Exception('Error: ' . $e->getMessage());
+        }
     }
 
     //Comprovar id i nom.
@@ -81,6 +95,16 @@ class PersonatgeRepository {
                 ->first();
     
             return $personatge;
+        } catch (\Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    function selectComprovarUsuariPerId($idPersonatge, $usuariId) {
+        try {
+            return $personatge = Personatge::where('usuari_id', $usuariId)
+            ->where('id_personatge', $idPersonatge)
+            ->first();    
         } catch (\Exception $e) {
             throw new Exception($e->getMessage());
         }

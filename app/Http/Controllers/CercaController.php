@@ -42,7 +42,7 @@ class CercaController extends Controller {
             return back()->withErrors(["➤ No pots modificar un personatge que no es teu."])->withInput();
         }
 
-        //Enviar id del personage al controlador que muestra la vista para mostrar los datos del personatge.
+        //Enviar el personatge al controlador que muestra la vista para mostrar los datos del personatge.
         return redirect()->route('modificar', ['nom' => $personatge->nom]);
     }
 }

@@ -7,8 +7,8 @@
     <!-- ESTILS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/general.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/mostrar.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/paginacio.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/errors.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/menu.css') }}">
     <title>Inici</title>
 </head>
 <body>
@@ -20,7 +20,8 @@
         <div class="container-accio">
             <h1>MODIFICAR PERSONATGE</h1>
 
-            <form action="{{ route('modificarPersonatge') }}" method="POST">
+            <form action="{{ route('modificarPersonatge', $personatge->id_personatge) }}" method="POST">
+            @csrf
 
                 <label for="nom">Nom:</label>
                 <input type="text" id="nom" name="nom" value="{{ old('nom', $personatge->nom) }}"/>
