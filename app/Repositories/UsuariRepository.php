@@ -61,7 +61,12 @@ class UsuariRepository {
         }
     }
 
-    function comprovarEmail($email){   
+    function comprovarEmail($email){
+        try {
+            return Usuari::where('correu', $email)->first();
+        } catch (Exception $e) {
+            throw new Exception("Error en comprovar si el nom d'usuari existeix: " . $e->getMessage());
+        }   
     }
 
     function comprovarToken($token) { 
@@ -104,6 +109,15 @@ class UsuariRepository {
 
     //modificar la contrasenya de l'usuari.
     function modificarContrasenya($contrasenyaCifrada, $usuariId){
+        try {
+            $usuari = Usuari::findOrFail($usuariId);
+            $usuari->update([
+                'contrasenya' => $contrasenyaCifrada,
+            ]);
+        } catch (Exception $exception) {
+            throw new Exception("Error en inserir l'usuari: " . $exception->getMessage());
+        }
+    
     }
 
     function modificarNomUsuari($nomUsuari, $usuariId){
@@ -112,7 +126,16 @@ class UsuariRepository {
     function modificarImatgePerfilUsuari($urlImatge, $usuariId) {
     }
 
-    function guardarToken($email, $token, $expires) {  
+    function guardarToken($usuariId, $token, $expires) { 
+        try {
+            $usuari = Usuari::findOrFail($usuariId);
+            $usuari->update([
+                'token' => $token,
+                'token_time' => $expires
+            ]);
+        } catch (Exception $exception) {
+            throw new Exception("Error en inserir l'usuari: " . $exception->getMessage());
+        }
     }
 
     //********************************************************

@@ -48,7 +48,6 @@ class LoginController extends Controller {
             return back()->withErrors(['contrasenya' => '➤ La contrasenya no és correcta']);
         }
 
-
         Auth::login($usuari);
 
         // Si se marca "Recordar", guardar una cookie con el nombre de usuario

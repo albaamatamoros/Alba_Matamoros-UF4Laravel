@@ -20,6 +20,7 @@ class InsertarController extends Controller {
 
     public function insertarPersonatge(Request $request) {
         $usuari = Auth::user();
+        dd($usuari);
 
         $request->validate([
             'nom' => 'required|string|max:255',

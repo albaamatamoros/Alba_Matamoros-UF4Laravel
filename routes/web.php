@@ -34,6 +34,10 @@ Route::post('/registreUsuari', [RegistrarController::class, 'registreUsuari'])->
 // CONTRASENYA OBLIDADA
 
 Route::get('/contrasenyaOblidada', [CanviarContrasenyaController::class, 'show2'])->name('contrasenyaOblidada');
+Route::post('/contrasenyaOblidada', [CanviarContrasenyaController::class, 'contrasenyaOblidada'])->name('contrasenyaOblidada');
+
+Route::get('restablirContrasenya/{token}', [CanviarContrasenyaController::class, 'restablirContrasenya'])->name('restablirContrasenya');
+
 
 // ------------------------------------------
 
@@ -82,6 +86,7 @@ Route::middleware(['auth'])->group(function () {
 
     //CANVIAR CONTRASENYA
     Route::get('/canviarContrasenya', [CanviarContrasenyaController::class, 'show'])->name('canviarContrasenya');
+    Route::post('/canviarContrasenya', [CanviarContrasenyaController::class, 'canviarContrasenya'])->name('canviarContrasenyaUsuari');
 
     // LOGOUT
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');

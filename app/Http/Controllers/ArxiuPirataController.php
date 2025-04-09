@@ -10,12 +10,15 @@ class ArxiuPirataController extends Controller {
     }
 
     public function obtenirPirates() {
+        return view('arxiuPirata');
     }
 
     public function obtenirPersonatges() {
+        return view('arxiuPirata');
     }
 
     public function obtenirMarines() {
+        return view('arxiuPirata');
     }
 
 }
