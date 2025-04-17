@@ -15,6 +15,7 @@ use App\Http\Controllers\EsborrarController;
 use App\Http\Controllers\LectorQRController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\PersonatgeController;
+use App\Http\Controllers\AuthController;
 
 // --------------------------------------------
 // INDEX
@@ -25,6 +26,9 @@ Route::get('/', [PersonatgeController::class, 'show'])->name('index');
 
 Route::get('/login', [LoginController::class, 'show'])->name('login');
 Route::post('/loginUsuari', [LoginController::class, 'loginUsuari'])->name('loginUsuari');
+
+Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('authGoogle');
+Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
 
 // REGISTRE
 
@@ -75,9 +79,7 @@ Route::middleware(['auth'])->group(function () {
 
     //ARXIU PIRATA
     Route::get('/arxiuPirata', [ArxiuPirataController::class, 'show'])->name('arxiuPirata');
-    Route::get('/arxiuPirata/apiPirates', [ArxiuPirataController::class, 'obtenirPirates'])->name('obtenirPirates');
     Route::get('/arxiuPirata/apiPersonatges', [ArxiuPirataController::class, 'obtenirPersonatges'])->name('obtenirPersonatges');
-    Route::get('/arxiuPirata/marines', [ArxiuPirataController::class, 'obtenirMarines'])->name('obtenirMarines');
 
     // PERFIL
     Route::get('/perfil', [PerfilController::class, 'show'])->name('perfil');

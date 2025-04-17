@@ -61,7 +61,7 @@
                 <a href="{{ route('social.callback', ['provider' => 'reddit']) }}" class="icono-link">
                     <i class="fa-brands fa-reddit"></i>
                 </a>
-                <a href="{{ route('social.callback', ['provider' => 'google']) }}" class="icono-link">
+                <a href="{{ route('authGoogle') }}" class="icono-link">
                     <i class="fa-brands fa-google-plus"></i>
                 </a>
             </div>

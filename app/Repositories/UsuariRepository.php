@@ -118,6 +118,21 @@ class UsuariRepository {
 
     //Insertar Usuari per HybridAuth.
     function insertarNouUsuariOAuth($usuari, $email, $nom, $cognom){
+        try {
+            Usuari::create([
+                'nom' => $nom,
+                'cognoms' => $cognom,
+                'correu' => $email,
+                'usuari' => $usuari,
+                'contrasenya' => "",
+                'administrador' => 0,
+                'token' => "",
+                'token_time' => 0,
+                'autentificacio' => "Google"
+            ]);
+        } catch (Exception $exception) {
+            throw new Exception($exception->getMessage());
+        }
     }
 
     //********************************************************
@@ -178,6 +193,14 @@ class UsuariRepository {
     }
 
     function iniciSessioOAuth($usuari, $email){
+        try {
+            return Usuari::where('usuari', $usuari)
+                ->where('correu', $email)
+                ->where('autentificacio', 'Google')
+                ->first();
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
     }
 
     //********************************************************
