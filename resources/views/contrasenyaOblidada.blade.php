@@ -7,8 +7,8 @@
     <!-- ESTILS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/general.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/mostrar.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/paginacio.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/perfil.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/errors.css') }}">
     <title>Inici</title>
 </head>
 <body>
@@ -29,7 +29,7 @@
                 <input type="email" id="email" name="email" value="{{ old('email') }}" required>
                 
                 <input type="submit" name="action" value="Restablir Contrasenya">
-                
+
                 <!-- Component missatges -->
                 <x-alertes/>
                 <!-- ----------------------------------------------- -->

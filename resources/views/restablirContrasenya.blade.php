@@ -7,8 +7,8 @@
     <!-- ESTILS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/general.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/mostrar.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/paginacio.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/perfil.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/errors.css') }}">
     <title>Inici</title>
 </head>
 <body>
@@ -17,7 +17,7 @@
 
     <div class="container-general-perfil">
         <h2>Canviar Contrasenya</h2>
-        <form action="{{ route('contrasenyaOblidada') }}" method="POST">
+        <form action="{{ route('restablirCanviContrasenya', $token) }}" method="POST">
             @csrf
             <label for="nova_contrasenya">Nova Contrasenya:</label>
             <input type="password" id="nova_contrasenya" name="nova_contrasenya">
@@ -26,6 +26,10 @@
             <input type="password" id="confirmar_contrasenya" name="confirmar_contrasenya">
 
             <input type="submit" name="action" value="Restablir">
+
+            <!-- Component missatges -->
+            <x-alertes/>
+            <!-- ----------------------------------------------- -->
         </form>
     </div>
 </body>

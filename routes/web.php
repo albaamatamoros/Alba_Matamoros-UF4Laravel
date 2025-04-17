@@ -14,12 +14,12 @@ use App\Http\Controllers\ConsultarController;
 use App\Http\Controllers\EsborrarController;
 use App\Http\Controllers\LectorQRController;
 use App\Http\Controllers\PerfilController;
+use App\Http\Controllers\PersonatgeController;
 
 // --------------------------------------------
 // INDEX
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+
+Route::get('/', [PersonatgeController::class, 'show'])->name('index');
 
 // LOGIN
 
@@ -38,6 +38,8 @@ Route::post('/contrasenyaOblidada', [CanviarContrasenyaController::class, 'contr
 
 Route::get('restablirContrasenya/{token}', [CanviarContrasenyaController::class, 'restablirContrasenya'])->name('restablirContrasenya');
 
+// enviar los datos del formulario para restablecer la contraseña.
+Route::post('/restablirCanviContrasenya/{token}', [CanviarContrasenyaController::class, 'restablirCanviContrasenya'])->name('restablirCanviContrasenya');
 
 // ------------------------------------------
 
@@ -91,9 +93,9 @@ Route::middleware(['auth'])->group(function () {
     // LOGOUT
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
-    Route::middleware(['admin'])->group(function () {
-        Route::get('/administrarUsuaris', [AdministrarUsuarisController::class, 'show'])->name('administrarUsuaris');
-    });
+    //ADMINISTRAR USUARIS
+    Route::get('/administrarUsuaris', [AdministrarUsuarisController::class, 'show'])->name('administrarUsuaris');
+    Route::delete('/esborrarUsuari/{id}', [AdministrarUsuarisController::class, 'esborrarUsuari'])->name('esborrarUsuari');
 });
 
 //----------------- temporales pa que no pete

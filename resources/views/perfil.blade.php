@@ -21,34 +21,34 @@
             @csrf
 
             <div class="container-avatar-user">
-                <img src="{{ auth()->user()->image ?? asset('images/defaultUser.jpg') }}" class="avatar-user-perfil" alt="Avatar">
+                <img src="{{ asset(auth()->user()->imatge ?? 'imatges-users/defaultUser.jpg') }}" class="avatar-user-perfil" alt="Avatar">
             </div>
 
             <label for="arxiu">Selecciona un archivo:</label>
             <input type="file" name="arxiu" id="arxiu">
 
-            @if (auth()->user()->is_authenticated == false)
+            @if (auth()->user()->autentificacio == "")
                 <label for="username">Nom d'usuari</label>
-                <input type="text" id="username" name="username" value="{{ old('username', auth()->user()->username) }}">
+                <input type="text" id="username" name="username" value="{{ old('usuari', auth()->user()->usuari) }}">
             @else
                 <label for="username">Nom d'usuari</label>
-                <input type="hidden" id="username" name="username" value="{{ auth()->user()->username }}">
-                <input type="text" id="user" name="user" value="{{ auth()->user()->username }}" readonly disabled>
+                <input type="hidden" id="username" name="username" value="{{ auth()->user()->usuari }}">
+                <input type="text" id="user" name="user" value="{{ auth()->user()->usuari }}" readonly disabled>
             @endif
 
-            @if(auth()->user()->name)
+            @if(auth()->user()->nom)
                 <label for="nom">Nom</label>
-                <input type="text" id="nom" name="nom" value="{{ auth()->user()->name }}" readonly disabled>
+                <input type="text" id="nom" name="nom" value="{{ auth()->user()->nom }}" readonly disabled>
             @endif
 
-            @if(auth()->user()->surname)
+            @if(auth()->user()->cognoms)
                 <label for="cognom">Cognoms</label>
-                <input type="text" id="cognom" name="cognom" value="{{ auth()->user()->surname }}" readonly disabled>
+                <input type="text" id="cognom" name="cognom" value="{{ auth()->user()->cognoms }}" readonly disabled>
             @endif
 
-            @if(auth()->user()->email)
+            @if(auth()->user()->correu)
                 <label for="email">Correo Electrónico</label>
-                <input type="email" id="email" name="email" value="{{ auth()->user()->email }}" readonly disabled>
+                <input type="email" id="email" name="email" value="{{ auth()->user()->correu }}" readonly disabled>
             @endif
 
             <!-- Component missatges -->

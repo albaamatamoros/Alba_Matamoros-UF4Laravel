@@ -99,10 +99,36 @@ class CanviarContrasenyaController extends Controller {
             return redirect()->route('contrasenyaOblidada')->withErrors(['token' => '➤ El token no és vàlid o ha caducat.']);
         }
 
-        return view('restablirContrasenya');
+        return view('restablirContrasenya', ['token' => $token]);
     }
 
-    public function restablirCanviContrasenya(){
+    public function restablirCanviContrasenya(Request $request, $token) {
+        $request->validate([
+            'nova_contrasenya' => [
+                'required',
+                'same:confirmar_contrasenya',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/'
+            ],
+            'confirmar_contrasenya' => 'required',
+        ], [
+            'nova_contrasenya.required' => "➤ El camp 'nova_contrasenya' és obligatori.",
+            'nova_contrasenya.same' => "➤ Nova contrasenya i confirmar contrasenya no són iguals.",
+            'nova_contrasenya.regex' => "➤ El format de la contrasenya no és correcte.",
+            'confirmar_contrasenya.required' => "➤ El camp 'confirmar_contrasenya' és obligatori.",
+        ]);
 
+        $usuari = $this->usuariRepository->comprovarToken($token);
+        if (!$usuari) {
+            return back()->withErrors(['token' => '➤ El token no és vàlid o ha caducat.']);
+        }
+
+        if (Hash::check($request->nova_contrasenya, $usuari->contrasenya)) {
+            return back()->withErrors(['nova_contrasenya' => '➤ La nova contrasenya no pot ser igual a la contrasenya actual.']);
+        }
+
+        $contrasenyaCifrada = Hash::make($request->nova_contrasenya);
+        $this->usuariRepository->modificarContrasenya($contrasenyaCifrada, $usuari->id_usuari);
+
+        return redirect()->route('contrasenyaOblidada')->with('correcte', 'Contrasenya canviada correctament.');
     }
 }

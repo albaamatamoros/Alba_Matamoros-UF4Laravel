@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/general.css') }}">
     <link rel="stylesheet" href="{{ asset('css/perfil.css') }}">
     <link rel="stylesheet" href="{{ asset('css/errors.css') }}">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <title>Inici de sessió</title>
 </head>
 <body>
@@ -22,7 +23,8 @@
                 @csrf
                 
                 <label for="usuari">Nom d'Usuari:</label>
-                <input type="text" id="usuari" name="usuari" class="form-control" value="{{ old('usuari', isset($_COOKIE['usuariNom']) ? $_COOKIE['usuariNom'] : '') }}">
+                <input type="text" id="usuari" name="usuari" class="form-control" 
+                    value="{{ old('usuari', $usuariNom ?? '') }}">
 
                 <label for="contrasenya">Contrasenya:</label>
                 <input type="password" id="contrasenya" name="contrasenya">
@@ -37,7 +39,7 @@
                 @endif
 
                 <label for="recorda" class="checkbox-recordam">
-                    <input type="checkbox" id="recorda" name="recorda"> Recorda'm
+                    <input type="checkbox" id="recorda" name="recorda" {{ old('recorda') ? 'checked' : '' }}> Recorda'm
                 </label>
 
                 <input type="submit" name="action" value="Iniciar sessió">

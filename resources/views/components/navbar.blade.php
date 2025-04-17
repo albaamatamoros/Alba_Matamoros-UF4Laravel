@@ -1,4 +1,4 @@
-<nav>
+<nav class="navbar">
     <!-- BARRA DE NAVEGACIÓ -->
     <div class="left">
         <a href="{{ route('index') }}">INICI</a>
@@ -34,7 +34,7 @@
                     <a href="{{ route('canviarContrasenya') }}">Canviar contrasenya</a>
                 @endif
                 
-                @if(Auth::user()->es_admin)
+                @if(Auth::user()->administrador == 1)
                     <a href="{{ route('administrarUsuaris') }}">Administrar usuaris</a>
                 @endif
 

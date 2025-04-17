@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Usuari;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Carbon;
 use Exception;
 
 class UsuariRepository {
@@ -17,7 +18,7 @@ class UsuariRepository {
             }
             return null;
         } catch (Exception $e) {
-            throw new Exception("Error en comprovar usuari i contrasenya: " . $e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -28,7 +29,7 @@ class UsuariRepository {
                 ->orWhere('correu', $email)
                 ->first();
         } catch (Exception $e) {
-            throw new Exception("Error en comprovar usuari i correu: " . $e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -37,7 +38,7 @@ class UsuariRepository {
         try {
             return Usuari::where('usuari', $usuari)->first();
         } catch (Exception $e) {
-            throw new Exception("Error en comprovar l'existència de l'usuari: " . $e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -46,7 +47,7 @@ class UsuariRepository {
         try {
             return Usuari::find($usuariId);
         } catch (Exception $e) {
-            throw new Exception("Error en comprovar la contrasenya per ID: " . $e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -57,7 +58,7 @@ class UsuariRepository {
                 ->where('id_usuari', '!=', $usuariId)
                 ->first();
         } catch (Exception $e) {
-            throw new Exception("Error en comprovar si el nom d'usuari existeix: " . $e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -65,14 +66,29 @@ class UsuariRepository {
         try {
             return Usuari::where('correu', $email)->first();
         } catch (Exception $e) {
-            throw new Exception("Error en comprovar si el nom d'usuari existeix: " . $e->getMessage());
+            throw new Exception($e->getMessage());
         }   
     }
 
     function comprovarToken($token) { 
+        try {
+            $currentTime = Carbon::now()->timestamp;
+            return Usuari::where('token', $token)
+                ->where('token_time', '>', $currentTime)
+                ->first();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }  
+    }
+
+    function comprovarExistensiaDUsuariPerId($usuariId) {
+        try {
+            return Usuari::where('id_usuari', $usuariId)->first();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
     
-
     //********************************************************
     //INSERT
 
@@ -92,7 +108,7 @@ class UsuariRepository {
             ]);
 
         } catch (Exception $exception) {
-            throw new Exception("Error en inserir l'usuari: " . $exception->getMessage());
+            throw new Exception($exception->getMessage());
         }
     }
 
@@ -115,15 +131,31 @@ class UsuariRepository {
                 'contrasenya' => $contrasenyaCifrada,
             ]);
         } catch (Exception $exception) {
-            throw new Exception("Error en inserir l'usuari: " . $exception->getMessage());
+            throw new Exception($exception->getMessage());
         }
     
     }
 
     function modificarNomUsuari($nomUsuari, $usuariId){
+        try {
+            $usuari = Usuari::findOrFail($usuariId);
+            $usuari->update([
+                'usuari' => $nomUsuari
+            ]);
+        } catch (\Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
     function modificarImatgePerfilUsuari($urlImatge, $usuariId) {
+        try {
+            $usuari = Usuari::findOrFail($usuariId);
+            $usuari->update([
+                'imatge' => $urlImatge
+            ]);
+        } catch (\Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
     function guardarToken($usuariId, $token, $expires) { 
@@ -134,7 +166,7 @@ class UsuariRepository {
                 'token_time' => $expires
             ]);
         } catch (Exception $exception) {
-            throw new Exception("Error en inserir l'usuari: " . $exception->getMessage());
+            throw new Exception($exception->getMessage());
         }
     }
 
@@ -152,10 +184,23 @@ class UsuariRepository {
     //ESBORRAR
 
     function esborrarUsuariPerId($idUsuari){
+        try {
+            $usuari = Usuari::findOrFail($idUsuari);
+            $usuari->delete();
+        } catch (Exception $exception) {
+            throw new Exception($exception->getMessage());
+        }
     }
 
     //********************************************************
     //MOSTRAR USUARIS
     function mostrarTotsElsUsuaris($usuariId){
+        try {
+            return Usuari::where('id_usuari', '!=', $usuariId)
+                ->where('administrador', 0)
+                ->get();
+        } catch (Exception $exception) {
+            throw new Exception($exception->getMessage());
+        }
     }
 }
