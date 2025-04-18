@@ -10,7 +10,6 @@ use App\Http\Controllers\CanviarContrasenyaController;
 use App\Http\Controllers\InsertarController;
 use App\Http\Controllers\ModificarController;
 use App\Http\Controllers\CercaController;
-use App\Http\Controllers\ConsultarController;
 use App\Http\Controllers\EsborrarController;
 use App\Http\Controllers\LectorQRController;
 use App\Http\Controllers\PerfilController;
@@ -102,8 +101,3 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/administrarUsuaris', [AdministrarUsuarisController::class, 'show'])->name('administrarUsuaris');
     Route::delete('/esborrarUsuari/{id}', [AdministrarUsuarisController::class, 'esborrarUsuari'])->name('esborrarUsuari');
 });
-
-//----------------- temporales pa que no pete
-Route::get('/social.callback', function () {
-    return view('social.callback'); 
-})->name('social.callback');
