@@ -41,6 +41,10 @@ Com sempre, deixo dos usuaris preparats per poder accedir a l'aplicació:
 | amatamoros  | P@ssw0rd    | Administrador  |
 | ppica       | P@ssw0rd    | Usuari normal  |
 
+## 🗃️ Base de dades
+
+El fitxer que conté la base de dades i que podeu importar es diu: ddb237716.sql
+
 ---
 
 💻 Fet per **Alba Matamoros Morales**
