@@ -48,6 +48,8 @@ section.blocPersonatges{
 /* Bloc de personatges */
 
 .personatges-container {
+    margin-left: 50px;
+    margin-right: 50px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 15px;
@@ -117,6 +119,23 @@ section.blocPersonatges{
 
 /* Botons Esborrar/Copiar/Modificar */
 
+.personatge-botons a,
+.personatge-botons button {
+    padding: 10px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+    text-decoration: none;
+    border: none;
+}
+
+/* Eliminar */
 .eliminar-btn {
     background-color: var(--botoEsborrar);
 }
@@ -125,8 +144,10 @@ section.blocPersonatges{
     background-color: var(--botoHoverEsborrar);
 }
 
+/* Modificar */
 .modificar-btn {
     background-color: var(--botoModificarCopiar);
+    color: white;
 }
 
 .modificar-btn:hover {

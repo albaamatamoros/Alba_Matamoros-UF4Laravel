@@ -51,6 +51,11 @@ class PersonatgeRepository {
 
     //esborrar personatge per id.
     function esborrarPerId($idPersonatge) {
+        try {
+            return Personatge::where('id_personatge', $idPersonatge)->delete();
+        } catch (\Exception $e) {
+            throw new \Exception("Error al eliminar el personatge: " . $e->getMessage());
+        }
     }
 
     //********************************************************
@@ -110,17 +115,30 @@ class PersonatgeRepository {
         }
     }
 
-    //Comprovacio d'un article en concret per id per poder fer modificació de les seves dades.
-    function selectPersonatgePerId($id) {
-    }
+    //********************************************************
+    //PAGINACIÓ
 
+    function paginacio($personatgesPerPage, $ordenacio, $cerca, $usuariId) {
+        try {
+            $query = Personatge::query();
 
-    //CONSULTAR
-    //Mostrar tots els articles.
-    function consultar() {
-    }
+            if ($usuariId) {
+                $query->where('usuari_id', $usuariId);
+            }
 
-    //Consultar personatges per usuari en concret.
-    function consultarPerUsuari($usuariId) {
+            if ($cerca) {
+                $query->where('nom', 'like', '%' . $cerca . '%');
+            }
+
+            return $query->orderBy('nom', $ordenacio)
+                ->paginate($personatgesPerPage)
+                ->appends([
+                    'search' => $cerca,
+                    'ordenacio' => $ordenacio,
+                    'personatgesPerPage' => $personatgesPerPage
+                ]);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 }

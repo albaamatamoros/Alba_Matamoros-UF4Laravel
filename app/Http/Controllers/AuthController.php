@@ -20,6 +20,7 @@ class AuthController extends Controller {
     }
 
     public function handleGoogleCallback() {
+        // Agafem les dades de l'usuari de Google
         $googleUsuari = Socialite::driver('google')->user();
         $usuari = $googleUsuari->user;
 
@@ -30,7 +31,7 @@ class AuthController extends Controller {
 
         $usuariExistent = $this->usuariRepository->iniciSessioOAuth($user, $email);
 
-        // Si no existe, lo creamos
+        // Si no existeix l'usuari, el creem
         if (!$usuariExistent) {
             $this->usuariRepository->insertarNouUsuariOAuth($user, $email, $nom, $cognom);
             $usuariExistent = $this->usuariRepository->iniciSessioOAuth($user, $email);

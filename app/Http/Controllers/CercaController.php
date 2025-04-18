@@ -20,13 +20,16 @@ class CercaController extends Controller {
         return view('cercar');
     }
 
+    // CERCA PERSONATGE
+    // Aquesta funció busca un personatge per nom i comprova si l'usuari autenticat és el propietari d'aquest personatge.
     public function cercarPersonatge(Request $request) {
         //Obtenim l'usuari autenticat.
         $usuari = Auth::user();
 
         $request->validate([
-            'nom' => 'required|string|max:255',
+            'nom' => 'required|string|max:30',
         ], [
+            'nom.max' => '➤ Nom massa llarg (màxim 30 caràcters).',
             'nom.required' => '➤ Has de omplenar el nom per poder buscar el personatge que vols modificar.',
         ]);
 

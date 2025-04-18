@@ -29,9 +29,10 @@ class LoginController extends Controller {
     public function loginUsuari(Request $request) {
         // Validació de camps.
         $request->validate([
-            'usuari' => 'required',
+            'usuari' => 'required|string|max:30',
             'contrasenya' => 'required',
         ], [
+            'usuari.max' => '➤ Nom d\'usuari massa llarg (màxim 30 caràcters).',
             'usuari.required' => '➤ No pots iniciar sessió amb un usuari buit.',
             'contrasenya.required' => '➤ Et cal una contrasenya per iniciar sessió.',
         ]);

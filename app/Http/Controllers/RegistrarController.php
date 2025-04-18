@@ -23,10 +23,10 @@ class RegistrarController extends Controller {
     public function registreUsuari(Request $request) {
         // Validació de camps.
         $request->validate([
-            'nom' => 'required|string|max:255',
-            'cognoms' => 'required|string|max:255',
-            'usuari' => 'required|string|max:255|unique:usuaris,usuari',
-            'correu' => 'required|email|unique:usuaris,correu',
+            'nom' => 'required|string|max:30',
+            'cognoms' => 'required|string|max:100',
+            'usuari' => 'required|string|max:30|unique:usuaris,usuari',
+            'correu' => 'required|max:100|email|unique:usuaris,correu',
             'contrasenya' => [
                 'required',
                 'min:8',
@@ -34,6 +34,12 @@ class RegistrarController extends Controller {
             ],
             'confirmar_contrasenya' => 'required|same:contrasenya',
         ], [
+            'nom.max' => "➤ Nom massa llarg (màxim 30 caràcters)",
+            'cognoms.max' => "➤ Cognoms massa llargs (màxim 100 caràcters)",
+            'usuari.max' => "➤ Nom d'usuari massa llarg (màxim 30 caràcters)",
+            'usuari.unique' => "➤ Nom d'usuari ja registrat",
+            'correu.max' => "➤ Correu massa llarg (màxim 100 caràcters)",
+            'correu.unique' => "➤ Correu ja registrat",
             'nom.required' => "➤ El camp 'nom' és obligatori",
             'cognoms.required' => "➤ El camp 'cognoms' és obligatori",
             'usuari.required' => "➤ El camp 'usuari' és obligatori",

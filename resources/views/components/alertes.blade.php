@@ -1,3 +1,4 @@
+<!-- Alert messages component -->
 @if ($correcte)
     <div class="alert success-container">
         <span class="alert-icon success-icon">✔️</span>
@@ -7,6 +8,7 @@
     </div>
 @endif
 
+<!--  Error messages -->
 @if (!empty($errors))
     <div class="alert error-container">
         <span class="alert-icon error-icon">⚠️</span>

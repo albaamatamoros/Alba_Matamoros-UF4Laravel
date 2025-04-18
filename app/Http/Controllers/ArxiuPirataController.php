@@ -16,10 +16,9 @@ class ArxiuPirataController extends Controller {
         // URL de la API de One Piece
         $apiOnePiece = "https://api.api-onepiece.com/v2/characters/en";
         
-        // Obtener la respuesta de la API
         $response = Http::get($apiOnePiece);
 
-        // Verificar si la respuesta fue exitosa
+        // Comprovem si la resposta és correcta
         if (!$response->successful()) {
             return response()->json(['error' => 'No s\'han pogut obtenir les dades de l\'API'], 500);
         }
@@ -27,14 +26,13 @@ class ArxiuPirataController extends Controller {
         // Decodificar el JSON a un array
         $personatges = $response->json();
 
-        // Filtrar los personajes según el filtro que se haya recibido
+        // Secogns el filtre seleccionat, obtenim els personatges corresponents
         if ($filtre === "Marine") {
             $personatges = $this->obtenirMarines($personatges);
         } elseif ($filtre === "Pirates") {
             $personatges = $this->obtenirPirates($personatges);
         }
 
-        // Modificamos el array para asegurarnos de que cada campo es un string
         $personatges = array_map(function ($character) {
             return [
                 'name' => isset($character['name']) && $character['name'] !== '' ? $character['name'] : 'Desconegut',
@@ -50,12 +48,14 @@ class ArxiuPirataController extends Controller {
 
 
     public function obtenirMarines($personatges) {
+        // Filtrar els personatges per aquells que són Marines
         return array_filter($personatges, function($character) {
             return isset($character['crew']['name']) && strpos(strtolower($character['crew']['name']), 'marine') !== false;
         });
     }
 
     public function obtenirPirates($personatges) {
+        // Filtrar els personatges per aquells que són Pirates
         return array_filter($personatges, function($character) {
             $bounty = isset($character['bounty']) && $character['bounty'] !== '' ? $character['bounty'] : 'sense recompensa';
 

@@ -67,6 +67,8 @@ class CanviarContrasenyaController extends Controller {
 
     // RESTABLIR CONTRASENYA OBLIDADA
 
+    // Recollim l'email de l'usuari i comprovem si existeix
+    // Si existeix, enviem un correu amb un token per a restablir la contrasenya
     public function contrasenyaOblidada(Request $request) {
         $request->validate([
             'email' => 'required',
@@ -83,16 +85,21 @@ class CanviarContrasenyaController extends Controller {
             return back()->withErrors(['email' => '➤ Aquest usuari ha iniciat sessió amb una plataforma externa, no es pot canviar la contrasenya.']);
         }
 
+        // Generem un token i l'emmagatzemem a la base de dades
+        // El token caduca al cap d'una hora
         $token = Str::random(60);
         $expire = time() + 3600;
 
         $this->usuariRepository->guardarToken($usuari->id_usuari, $token, $expire);
 
+        // Enviem un correu electrònic amb el token.
         Mail::to($request->email)->send(new RestablirContrasenyaMail($token));
 
         return redirect()->route('contrasenyaOblidada')->with('correcte', "S'ha enviat un correu electrònic amb les instruccions per a restablir la teva contrasenya.");
     }
 
+    // Comprovem si el token és vàlid i no ha caducat
+    // Si és vàlid, mostrem la vista per a restablir la contrasenya.
     public function restablirContrasenya($token) {
         $usuari = $this->usuariRepository->comprovarToken($token);
         if (!$usuari) {
@@ -102,6 +109,8 @@ class CanviarContrasenyaController extends Controller {
         return view('restablirContrasenya', ['token' => $token]);
     }
 
+    // Comprovem si el token és vàlid i no ha caducat
+    // Si és vàlid, canviem la contrasenya de l'usuari.
     public function restablirCanviContrasenya(Request $request, $token) {
         $request->validate([
             'nova_contrasenya' => [

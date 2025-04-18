@@ -22,9 +22,10 @@ class PerfilController extends Controller {
         $usuari = Auth::user();
 
         $request->validate([
-            'username' => 'nullable|string|max:255',
-            'arxiu' => 'nullable|mimes:jpg,jpeg,png|max:2048',
+            'username' => 'nullable|string|max:30',
+            'arxiu' => 'nullable|mimes:jpg,jpeg,png|max:255',
         ], [
+            'username.max' => '➤ Nom d\'usuari massa llarg (màxim 30 caràcters).',
             'username.required' => '➤ El camp usuari es obligatori i no es pot deixar buit.',
             'arxiu.mimes' => '➤ Tipus d\'arxiu no permès. Només es permeten PNG i JPG.',
             'arxiu.max' => '➤ Mida màxima permesa: 2MB.',
@@ -53,7 +54,9 @@ class PerfilController extends Controller {
     
             // eliminar la imatge anterior si no és la imatge per defecte
             if ($usuari->imatge && $usuari->imatge !== 'imatges-users/defaultUser.jpg') {
+                // Eliminar la imatge anterior
                 $ruta = public_path($usuari->imatge);
+                // Comprovar si l'arxiu existeix i és un fitxer.
                 if (file_exists($ruta) && is_file($ruta)) {
                     unlink($ruta);
                 }
@@ -63,6 +66,7 @@ class PerfilController extends Controller {
             $canvis = true;
         }
 
+        // Comprovar si s'han realitzat canvis.
         if (!$canvis) {
             return redirect()->route('perfil')->withErrors(["senseCanvis" => "➤ No s'ha fet cap canvi."]);
         }

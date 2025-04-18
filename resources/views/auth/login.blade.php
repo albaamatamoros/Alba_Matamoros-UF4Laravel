@@ -38,6 +38,7 @@
                     @enderror
                 @endif
 
+                <!-- Checkbox recorda'm -->
                 <label for="recorda" class="checkbox-recordam">
                     <input type="checkbox" id="recorda" name="recorda" {{ old('recorda') ? 'checked' : '' }}> Recorda'm
                 </label>

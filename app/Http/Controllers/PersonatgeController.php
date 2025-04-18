@@ -5,32 +5,44 @@ namespace App\Http\Controllers;
 use App\Models\Personatge;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Repositories\PersonatgeRepository;
+use Illuminate\Support\Facades\Cookie;
 
 class PersonatgeController extends Controller {
+
+    protected $personatgeRepository;
+
+    public function __construct(PersonatgeRepository $personatgeRepository) {
+        $this->personatgeRepository = $personatgeRepository;
+    }
+
     public function show(Request $request) {
         $cerca = $request->input('search');
-        $direccio = $request->get('direccio', 'asc');
-        $personatgesPerPage = $request->get('personatgesPerPage', 5);
+        $ordenacio = $request->get('ordenacio', Cookie::get('ordenacio', 'asc'));
+        $personatgesPerPage = $request->get('personatgesPerPage', Cookie::get('personatgesPerPage', 5));
 
-        if (Auth::check()) {
-            $query = Personatge::where('usuari_id', Auth::id());
+        // Guardem en cookies les preferències de l'usuari
+        if ($request->has('ordenacio')) {
+            Cookie::queue('ordenacio', $ordenacio, 60 * 24 * 30);
+        }
+        if ($request->has('personatgesPerPage')) {
+            Cookie::queue('personatgesPerPage', $personatgesPerPage, 60 * 24 * 30);
+        }
+
+        //  Si s'accedeix a la ruta /consultar, no es filtra per usuari.
+        if (request()->is('consultar')) {
+            $usuariId = null;
         } else {
-            $query = Personatge::query();
+            $usuariId = Auth::check() ? Auth::id() : null;
         }
 
-        if ($cerca) {
-            $query->where('nom', 'like', '%' . $cerca . '%');
-        }
+        $personatges = $this->personatgeRepository->paginacio($personatgesPerPage, $ordenacio, $cerca, $usuariId);
 
-        // Afegim ordenació i paginació
-        $personatges = $query->orderBy('nom', $direccio)
-            ->paginate($personatgesPerPage)
-            ->appends([
-                'search' => $cerca,
-                'direccio' => $direccio,
-                'personatgesPerPage' => $personatgesPerPage
-            ]);
-    
-        return view('index', compact('personatges', 'direccio', 'personatgesPerPage'));
+        // Si s'accedeix a la ruta /consultar, es mostra la vista consultar.blade.php
+        if (request()->is('consultar')) {
+            return view('consultar', compact('personatges', 'ordenacio', 'personatgesPerPage'));
+        } else {
+            return view('index', compact('personatges', 'ordenacio', 'personatgesPerPage'));
+        }
     }
 }

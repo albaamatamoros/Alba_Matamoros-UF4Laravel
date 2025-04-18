@@ -21,10 +21,13 @@ class InsertarController extends Controller {
     public function insertarPersonatge(Request $request) {
         $usuari = Auth::user();
 
+        // Validem les dades del formulari.
         $request->validate([
-            'nom' => 'required|string|max:255',
+            'nom' => 'required|string|max:30',
             'text' => 'required|string|max:1000',
         ], [
+            'nom.max' => '➤ Nom massa llarg (màxim 30 caràcters).',
+            'text.max' => '➤ Descripció massa llarga (màxim 1000 caràcters).',
             'nom.required' => '➤ El camp Nom està buit.',
             'text.required' => '➤ El camp Descripció està buit.',
         ]);

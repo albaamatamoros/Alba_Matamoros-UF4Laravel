@@ -42,7 +42,7 @@ Route::post('/contrasenyaOblidada', [CanviarContrasenyaController::class, 'contr
 
 Route::get('restablirContrasenya/{token}', [CanviarContrasenyaController::class, 'restablirContrasenya'])->name('restablirContrasenya');
 
-// enviar los datos del formulario para restablecer la contraseña.
+// enviar les dades del formulari per restablir la contrasenya
 Route::post('/restablirCanviContrasenya/{token}', [CanviarContrasenyaController::class, 'restablirCanviContrasenya'])->name('restablirCanviContrasenya');
 
 // ------------------------------------------
@@ -72,8 +72,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/esborrar', [EsborrarController::class, 'show'])->name('esborrar');
     Route::post('/esborrarPersonatge', [EsborrarController::class, 'esborrarPersonatge'])->name('esborrarPersonatge');
 
+    //Esborrar a l'inici
+    Route::post('/esborrarPersonatgeInici/{id}', [EsborrarController::class, 'esborrarPersonatgeInici'])->name('esborrarPersonatgeInici');
+
     //CCONSULTAR
-    Route::get('/consultar', [ConsultarController::class, 'show'])->name('consultar');
+    Route::get('/consultar', [PersonatgeController::class, 'show'])->name('consultar');
 
     //-----------------------------
 

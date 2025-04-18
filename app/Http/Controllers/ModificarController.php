@@ -14,6 +14,7 @@ class ModificarController extends Controller {
         $this->personatgeRepository = $personatgeRepository;
     }
 
+    // Un cop l'usuari ha seleccionat el personatge que vol modificar, es redirigeix a aquesta funció.
     public function show($nom) {
 
         $personatge = $this->personatgeRepository->obtenerIdDelPersonatgePerNom($nom);
@@ -24,14 +25,17 @@ class ModificarController extends Controller {
         return view('modificar', [ 'personatge' => $personatge ]);
     }
 
+    // Aquesta funció es fa servir per modificar un personatge des de la vista d'inici.
     public function modificarPersonatge(Request $request, $personatgeId) {
         //Obtenim l'usuari autenticat.
         $usuari = Auth::user();
 
         $request->validate([
-            'nom' => 'required|string|max:255',
-            'text' => 'required|string|max:255',
+            'nom' => 'required|string|max:30',
+            'text' => 'required|string|max:1000',
         ], [
+            'nom.max' => '➤ Nom massa llarg (màxim 30 caràcters).',
+            'text.max' => '➤ Descripció massa llarga (màxim 1000 caràcters).',
             'nom.required' => '➤ El camp nom no pot ser buit',
             'text.required' => '➤ El camp descripcio no pot ser buit',
         ]);
