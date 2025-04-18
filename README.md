@@ -14,7 +14,7 @@ En aquest projecte he migrat totes les funcionalitats de la versió en PHP natiu
 - Ús de cookies per preferències d'usuari
 - Control d'usuaris (admin)
 
-### 🧩 Migració
+## 🧩 Migració
 
 No he migrat els següents components:
 
