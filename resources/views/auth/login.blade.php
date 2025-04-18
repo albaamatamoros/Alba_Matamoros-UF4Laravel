@@ -59,7 +59,7 @@
             </div>
 
             <div class="container-iconos">
-                <a href="{{ route('social.callback', ['provider' => 'reddit']) }}" class="icono-link">
+                <a href="#" class="icono-link disabled" style="pointer-events: none;">
                     <i class="fa-brands fa-reddit"></i>
                 </a>
                 <a href="{{ route('authGoogle') }}" class="icono-link">
