@@ -19,6 +19,12 @@ class CanviarContrasenyaController extends Controller {
     }
 
     public function show() {
+
+        // Comprovem si l'usuari a iniciat sessió amb una plataforma externa.
+        if (Auth::user()->autentificacio != "") {
+            abort(403);
+        }
+
         return view('canviarContrasenya');
     }
 

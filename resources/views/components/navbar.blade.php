@@ -30,7 +30,7 @@
                 <a href="{{ route('perfil') }}">Administrar perfil</a>
                 <a href="{{ route('lectorQr') }}">Lector QR</a>
                 
-                @if(Auth::user()->autenticacio == "")
+                @if(Auth::user()->autentificacio == "")
                     <a href="{{ route('canviarContrasenya') }}">Canviar contrasenya</a>
                 @endif
                 

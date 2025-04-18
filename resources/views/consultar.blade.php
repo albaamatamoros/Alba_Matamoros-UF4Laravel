@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/general.css') }}">
     <link rel="stylesheet" href="{{ asset('css/mostrar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/paginacio.css') }}">
-    <title>Consulta</title>
+    <title>Consultar personatges</title>
 </head>
 <body>
     <!-- Afegim el navbar -->

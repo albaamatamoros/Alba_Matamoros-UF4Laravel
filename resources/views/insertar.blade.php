@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/general.css') }}">
     <link rel="stylesheet" href="{{ asset('css/errors.css') }}">
     <link rel="stylesheet" href="{{ asset('css/menu.css') }}">
-    <title>Inici</title>
+    <title>Insertar personatge</title>
 </head>
 <body>
     <!-- Afegim el navbar -->

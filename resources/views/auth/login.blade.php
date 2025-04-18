@@ -45,10 +45,6 @@
 
                 <input type="submit" name="action" value="Iniciar sessió">
 
-                <!-- Component missatges -->
-                <x-alertes/>
-                <!-- ----------------------------------------------- -->
-
                 <div class="info-container">
                     <a href="{{ route('contrasenyaOblidada') }}">Heu oblidat la contrasenya?</a>
                 </div>

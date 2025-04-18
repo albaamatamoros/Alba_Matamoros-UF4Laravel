@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/general.css') }}">
     <link rel="stylesheet" href="{{ asset('css/perfil.css') }}">
     <link rel="stylesheet" href="{{ asset('css/errors.css') }}">
-    <title>Inici</title>
+    <title>Registrar-se</title>
 </head>
 <body>
     <!-- Afegim el navbar -->
