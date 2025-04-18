@@ -59,9 +59,6 @@
             </div>
 
             <div class="container-iconos">
-                <a href="#" class="icono-link disabled" style="pointer-events: none;">
-                    <i class="fa-brands fa-reddit"></i>
-                </a>
                 <a href="{{ route('authGoogle') }}" class="icono-link">
                     <i class="fa-brands fa-google-plus"></i>
                 </a>
